@@ -1,5 +1,5 @@
 # check_proxmox_cluster_node
-Nagios Check for a Node within a Proxmox Cluster
+Nagios Check for a Node within a Proxmox Cluster - It only checks the Online Status!
 
 # CMD Syntax 
 
