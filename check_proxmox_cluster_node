@@ -19,7 +19,7 @@ print_help () {
 	echo "Usage: $0 -H <HostIP> -u <username> -t <tokenname> -s <secret> -n <nodeNumber>"
 	echo ""
 	echo "This plugin checks the online status on one single node of a Proxmox Cluster"
-	echo "APIKey sample: root@pam!server01=1234345fef-b66d-4222-b115-1234567242b"
+	echo "username sample: root ; tokenname sample: servertoken01 secret sample: 1234abcd-456asd-1234abcde ; nodeNumber sample: 1"
 	echo "get Online Status"
 	echo ""
 	exit 0
@@ -45,8 +45,8 @@ SECRET=$8
 NODENUMBER=$10
 CRITICAL=0
 
-#check if HOSTIP, APIKEY and a NodeName was provided.
-if [ $HOSTIP ] && [ $NODENUMBER ] && [ $USERNAME ] && [ $TOKENNAME ];
+#check if HOSTIP, USERNAME, TOKENNAME, SECRET and a NodeName was provided.
+if [ $HOSTIP ] && [ $NODENUMBER ] && [ $USERNAME ] && [ $TOKENNAME ] && [ $SECRET ];
 then
         CHECK_PROCESS=$(curl -s --insecure --location --request GET 'https://'"$HOSTIP"':8006/api2/json/cluster/status' --header 'Authorization: PVEAPIToken='"$USERNAME"'@pam!'"$TOKENNAME"'='"$SECRET"'' | jq .data[1].online )
 
