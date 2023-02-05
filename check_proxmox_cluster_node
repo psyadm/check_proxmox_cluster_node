@@ -84,4 +84,3 @@ else
 	echo "Use '--help' for help!"
         exit $STATE_OK
 fi
-
