@@ -45,7 +45,6 @@ SECRET=$8
 NODENUMBER=$10
 CRITICAL=0
 
-#check cmd: curl -s --insecure --location --request GET 'https://172.20.10.120:8006/api2/json/cluster/status' --header 'Authorization: PVEAPIToken=root@pam!netstackblade01=3c187fef-b69d-4c22-bb25-1290a51f242b' | jq .data[1].online
 #check if HOSTIP, APIKEY and a NodeName was provided.
 if [ $HOSTIP ] && [ $NODENUMBER ] && [ $USERNAME ] && [ $TOKENNAME ];
 then
