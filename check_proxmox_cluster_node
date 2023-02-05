@@ -1,0 +1,87 @@
+#!/bin/bash
+#
+# Author: Andreas Pfeiffer - Netstack GmbH - www.netstack.de
+
+# 0 = NO NOTIFICATION; 1 = WARNING; 2 = CRITICAL
+
+STATE_ERROR=2
+
+
+# Set States
+STATE_OK=0
+STATE_WARNING=1
+STATE_CRITICAL=2
+
+
+# Set help
+print_help () {
+	echo ""
+	echo "Usage: $0 -H <HostIP> -u <username> -t <tokenname> -s <secret> -n <nodeNumber>"
+	echo ""
+	echo "This plugin checks the online status on one single node of a Proxmox Cluster"
+	echo "APIKey sample: root@pam!server01=1234345fef-b66d-4222-b115-1234567242b"
+	echo "get Online Status"
+	echo ""
+	exit 0
+}
+
+# Read input
+case "$1" in
+
+	--help)
+		print_help
+		exit $STATE_OK
+		;;
+	-h)
+		print_help
+		exit $STATE_OK
+		;;
+esac
+
+HOSTIP=$2
+USERNAME=$4
+TOKENNAME=$6
+SECRET=$8
+NODENUMBER=$10
+CRITICAL=0
+
+#check cmd: curl -s --insecure --location --request GET 'https://172.20.10.120:8006/api2/json/cluster/status' --header 'Authorization: PVEAPIToken=root@pam!netstackblade01=3c187fef-b69d-4c22-bb25-1290a51f242b' | jq .data[1].online
+#check if HOSTIP, APIKEY and a NodeName was provided.
+if [ $HOSTIP ] && [ $NODENUMBER ] && [ $USERNAME ] && [ $TOKENNAME ];
+then
+        CHECK_PROCESS=$(curl -s --insecure --location --request GET 'https://'"$HOSTIP"':8006/api2/json/cluster/status' --header 'Authorization: PVEAPIToken='"$USERNAME"'@pam!'"$TOKENNAME"'='"$SECRET"'' | jq .data[1].online )
+
+	if [ -n "$CHECK_PROCESS" ];
+	then
+
+	# Output the check results on the command line - only for DEBUG
+
+	#echo $CHECK_PROCESS
+
+	# Check if is it critical
+
+		if [ $CHECK_PROCESS = $CRITICAL ];
+		then
+			echo "CRITICAL Current files changed: $CHECK_PROCESS | files_changed=$CHECK_PROCESS"
+			exit $STATE_CRITICAL
+		else
+			echo "OK Online Status:  $CHECK_PROCESS | online_status=$CHECK_PROCESS"
+			exit $STATE_OK
+		fi
+
+
+	# some errors in the find command
+
+	else
+	echo "Error in the Command - Directory exist ?"
+	exit $STATE_ERROR
+	fi
+
+else
+
+
+	# In case we received a wrong syntax, do the following
+        echo "Syntax_Error: Usage: $0 -H <HostIP> -u <username> -t <tokenname> -s <secret> -n <nodeNumber>"
+	echo "Use '--help' for help!"
+        exit $STATE_OK
+fi
