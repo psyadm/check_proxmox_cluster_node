@@ -65,7 +65,7 @@ then
 			echo "CRITICAL current Uptime: $CHECK_PROCESS | uptime in hours=$CHECK_PROCESS"
 			exit $STATE_CRITICAL
 		else
-			echo "OK Online Status:  $CHECK_PROCESS | uptime in hours=$(date -d@$CHECK_PROCESS -u +%H:%M:%S)"
+			echo "OK Uptime Status: $CHECK_PROCESS | uptime in hours=$(date -d@$CHECK_PROCESS -u +%H:%M:%S)"
 			exit $STATE_OK
 		fi
 
