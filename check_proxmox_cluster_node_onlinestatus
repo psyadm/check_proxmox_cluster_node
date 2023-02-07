@@ -42,13 +42,13 @@ HOSTIP=$2
 USERNAME=$4
 TOKENNAME=$6
 SECRET=$8
-NODENUMBER=$10
+NODENUMBER=${10}
 CRITICAL=0
 
 #check if HOSTIP, USERNAME, TOKENNAME, SECRET and a NodeName was provided.
 if [ $HOSTIP ] && [ $NODENUMBER ] && [ $USERNAME ] && [ $TOKENNAME ] && [ $SECRET ];
 then
-        CHECK_PROCESS=$(curl -s --insecure --location --request GET 'https://'"$HOSTIP"':8006/api2/json/cluster/status' --header 'Authorization: PVEAPIToken='"$USERNAME"'@pam!'"$TOKENNAME"'='"$SECRET"'' | jq .data[1].online )
+        CHECK_PROCESS=$(curl -s --insecure --location --request GET 'https://'"$HOSTIP"':8006/api2/json/cluster/status' --header 'Authorization: PVEAPIToken='"$USERNAME"'@pam!'"$TOKENNAME"'='"$SECRET"'' | jq .data[$NODENUMBER].online )
 
 	if [ -n "$CHECK_PROCESS" ];
 	then
