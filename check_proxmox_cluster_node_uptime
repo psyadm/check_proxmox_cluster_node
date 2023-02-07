@@ -46,7 +46,7 @@ SECRET=$8
 NODENAME=${10}
 CRITICAL=${12}
 
-#check if HOSTIP, USERNAME, TOKENNAME, SECRET and a NodeName was provided. /api2/json/nodes/bladevs01/status
+#check if HOSTIP, USERNAME, TOKENNAME, SECRET and a NodeName was provided.
 if [ $HOSTIP ] && [ $NODENAME ] && [ $USERNAME ] && [ $TOKENNAME ] && [ $SECRET ]; 
 then
         CHECK_PROCESS=$(curl -s --insecure --location --request GET 'https://'"$HOSTIP"':8006/api2/json/nodes/'"$NODENAME"'/status' --header 'Authorization: PVEAPIToken='"$USERNAME"'@pam!'"$TOKENNAME"'='"$SECRET"'' | jq .data.uptime )
