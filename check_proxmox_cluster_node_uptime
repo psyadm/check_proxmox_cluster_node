@@ -16,10 +16,10 @@ STATE_CRITICAL=2
 # Set help
 print_help () {
 	echo ""
-	echo "Usage: $0 -H <HostIP> -u <username> -t <tokenname> -s <secret> -n <nodeNumber>"
+	echo "Usage: $0 -H <HostIP> -u <username> -t <tokenname> -s <secret> -n <nodeName>"
 	echo ""
 	echo "This plugin checks the online status on one single node of a Proxmox Cluster"
-	echo "username sample: root ; tokenname sample: servertoken01 secret sample: 1234abcd-456asd-1234abcde ; nodeNumber sample: 1"
+	echo "username sample: root ; tokenname sample: servertoken01 secret sample: 1234abcd-456asd-1234abcde ; nodeName sample: Server01"
 	echo "get Online Status"
 	echo ""
 	exit 0
@@ -42,13 +42,13 @@ HOSTIP=$2
 USERNAME=$4
 TOKENNAME=$6
 SECRET=$8
-NODENUMBER=$10
+NODENAME=${10}
 CRITICAL=0
 
-#check if HOSTIP, USERNAME, TOKENNAME, SECRET and a NodeName was provided.
-if [ $HOSTIP ] && [ $NODENUMBER ] && [ $USERNAME ] && [ $TOKENNAME ] && [ $SECRET ];
+#check if HOSTIP, USERNAME, TOKENNAME, SECRET and a NodeName was provided. /api2/json/nodes/bladevs01/status
+if [ $HOSTIP ] && [ $NODENUMBER ] && [ $USERNAME ] && [ $TOKENNAME ] && [ $SECRET ]; 
 then
-        CHECK_PROCESS=$(curl -s --insecure --location --request GET 'https://'"$HOSTIP"':8006/api2/json/cluster/status' --header 'Authorization: PVEAPIToken='"$USERNAME"'@pam!'"$TOKENNAME"'='"$SECRET"'' | jq .data[1].online )
+        CHECK_PROCESS=$(curl -s --insecure --location --request GET 'https://'"$HOSTIP"':8006/api2/json/nodes/'"$NODENAME"'/status' --header 'Authorization: PVEAPIToken='"$USERNAME"'@pam!'"$TOKENNAME"'='"$SECRET"'' | jq .data[].uptime )
 
 	if [ -n "$CHECK_PROCESS" ];
 	then
@@ -80,7 +80,7 @@ else
 
 
 	# In case we received a wrong syntax, do the following
-        echo "Syntax_Error: Usage: $0 -H <HostIP> -u <username> -t <tokenname> -s <secret> -n <nodeNumber>"
+        echo "Syntax_Error: Usage: $0 -H <HostIP> -u <username> -t <tokenname> -s <secret> -n <nodeName>"
 	echo "Use '--help' for help!"
         exit $STATE_OK
 fi
