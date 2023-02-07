@@ -6,12 +6,10 @@
 
 STATE_ERROR=2
 
-
 # Set States
 STATE_OK=0
 STATE_WARNING=1
 STATE_CRITICAL=2
-
 
 # Set help
 print_help () {
@@ -68,20 +66,16 @@ then
 			echo "OK Uptime Status: $CHECK_PROCESS - $(date -d "@$CHECK_PROCESS" "+$(($CHECK_PROCESS/86400)) days and %H hours %M minutes %S seconds")"
 			exit $STATE_OK
 		fi
-
-
+	
 	# some errors in the find command
-
 	else
-	echo "Error in the Command - Directory exist ?"
-	exit $STATE_ERROR
+		echo "Error in the Command - Directory exist ?"
+		exit $STATE_ERROR
 	fi
 
 else
-
-
 	# In case we received a wrong syntax, do the following
-        echo "Syntax_Error: Usage: $0 -H <HostIP> -u <username> -t <tokenname> -s <secret> -n <nodeName> -c <critical>"
+	echo "Syntax_Error: Usage: $0 -H <HostIP> -u <username> -t <tokenname> -s <secret> -n <nodeName> -c <critical>"
 	echo "Use '--help' for help!"
-        exit $STATE_OK
+	exit $STATE_OK
 fi
