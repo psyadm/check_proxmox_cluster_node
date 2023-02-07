@@ -62,10 +62,10 @@ then
 
 		if [ $CHECK_PROCESS -le $CRITICAL ];
 		then
-			echo "CRITICAL current Uptime: $CHECK_PROCESS - uptime in hours=$(date -d "@$CHECK_PROCESS" "+$(($CHECK_PROCESS/86400)) days and %H hours %M minutes %S seconds")"
+			echo "CRITICAL current Uptime: $CHECK_PROCESS - $(date -d "@$CHECK_PROCESS" "+$(($CHECK_PROCESS/86400)) days and %H hours %M minutes %S seconds")"
 			exit $STATE_CRITICAL
 		else
-			echo "OK Uptime Status: $CHECK_PROCESS - uptime in days & hours=$(date -d "@$CHECK_PROCESS" "+$(($CHECK_PROCESS/86400)) days and %H hours %M minutes %S seconds")"
+			echo "OK Uptime Status: $CHECK_PROCESS - $(date -d "@$CHECK_PROCESS" "+$(($CHECK_PROCESS/86400)) days and %H hours %M minutes %S seconds")"
 			exit $STATE_OK
 		fi
 
