@@ -81,7 +81,7 @@ else
 
 
 	# In case we received a wrong syntax, do the following
-        echo "Syntax_Error: Usage: $0 -H <HostIP> -u <username> -t <tokenname> -s <secret> -n <nodeName>"
+        echo "Syntax_Error: Usage: $0 -H <HostIP> -u <username> -t <tokenname> -s <secret> -n <nodeName> -c <critical>"
 	echo "Use '--help' for help!"
         exit $STATE_OK
 fi
