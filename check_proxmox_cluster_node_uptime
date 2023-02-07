@@ -69,7 +69,7 @@ then
 	
 	# some errors in the find command
 	else
-		echo "Error in the Command - Directory exist ?"
+		echo "Error in the Command - did you provide the right values ?"
 		exit $STATE_ERROR
 	fi
 
