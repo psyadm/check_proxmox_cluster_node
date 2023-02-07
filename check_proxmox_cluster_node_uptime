@@ -43,7 +43,7 @@ USERNAME=$4
 TOKENNAME=$6
 SECRET=$8
 NODENAME=${10}
-CRITICAL=0
+CRITICAL="10"
 
 #check if HOSTIP, USERNAME, TOKENNAME, SECRET and a NodeName was provided. /api2/json/nodes/bladevs01/status
 if [ $HOSTIP ] && [ $NODENAME ] && [ $USERNAME ] && [ $TOKENNAME ] && [ $SECRET ]; 
@@ -59,7 +59,7 @@ then
 
 	# Check if is it critical
 
-		if [ $CHECK_PROCESS = $CRITICAL ];
+		if [ $CHECK_PROCESS < $CRITICAL ];
 		then
 			echo "CRITICAL Current files changed: $CHECK_PROCESS | files_changed=$CHECK_PROCESS"
 			exit $STATE_CRITICAL
