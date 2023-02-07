@@ -4,7 +4,9 @@ This Repo does have several Nagios/icinga checks for Proxmox
 
 # CMD Syntax check_proxmox_cluster_node_onlinestatus
 
-`Usage: check_proxmox_cluster_node_onlinestatus -H <HostIP> -u <username> -t <tokenname> -s <secret> -n <nodeNumber>`
+```
+Usage: check_proxmox_cluster_node_onlinestatus -H <HostIP> -u <username> -t <tokenname> -s <secret> -n <nodeNumber>
+```
 
 # CMD Syntax check_proxmox_cluster_onlinestatus
 
